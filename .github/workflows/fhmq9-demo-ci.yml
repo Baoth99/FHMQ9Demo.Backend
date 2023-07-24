@@ -1,0 +1,27 @@
+name: CONTINUOUS INTERGRATION FOR FHMQ9 DEMO
+
+run-name: Run by @${{github.actor}}
+
+on: 
+    label:
+      types:
+        - created
+    push:
+      branches: 
+        - master
+        - develop
+
+jobs:
+    run_unit_test:
+        name: ci_job
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
+      
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v3
+              with:
+                dotnet-version: ${{ env.DOTNET_VERSION }}
+            - name: Check .NET Version
+              run: dotnet --version
