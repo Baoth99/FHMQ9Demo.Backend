@@ -54,6 +54,7 @@ stages:
               minorVersion: '0'
               patchVersion: '0'
               buildProperties: 'Configuration=Release'
+              
           - task: NuGetCommand@2
             displayName: 'Publish the FHMQ9Common.Package'
             inputs:
