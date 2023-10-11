@@ -54,7 +54,7 @@ stages:
               minorVersion: '0'
               patchVersion: '0'
               buildProperties: 'Configuration=Release'
-              
+
           - task: NuGetCommand@2
             displayName: 'Publish the FHMQ9Common.Package'
             inputs:
@@ -63,6 +63,7 @@ stages:
               nuGetFeedType: 'internal'
               publishVstsFeed: '80366291-0d16-4243-a637-2a7e557e977f'
               allowPackageConflicts: true
+              
   - stage: Deploy_aks
     displayName: Deploy to AKS
     jobs:
