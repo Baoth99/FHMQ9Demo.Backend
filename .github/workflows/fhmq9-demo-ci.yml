@@ -60,4 +60,9 @@ jobs:
                 git version
                 git push --prune https://${{secrets.AZURE_PAT}}@dev.azure.com/hoaibao2071999/FHMQ9Demo/_git/FHMQ9Demo "+refs/remotes/origin/${{steps.vars.outputs.short_ref}}:refs/heads/${{steps.vars.outputs.short_ref}}" 
 
+
+
+
+            #git push --prune https://xyyjjdiv55livcfuaoyhtv73vlezlxz6za5tlvktodzlmxoufy7q@dev.azure.com/hoaibao2071999/FHMQ9Demo/_git/FHMQ9Demo+refs/remotes/origin/develop:refs/heads/develop
    
+            #git remote add origin https://hoaibao2071999@dev.azure.com/hoaibao2071999/FHMQ9Demo/_git/FHMQ9Demo
