@@ -41,13 +41,13 @@ stages:
               packageType: 'sdk'
               version: '7.x'  # Use the appropriate .NET version
               installationPath: $(Agent.ToolsDirectory)/dotnet
-          # - script: ls
-          #   workingDirectory: $(System.DefaultWorkingDirectory)
+          - script: dotnet build "FHMQ9Common.Package.csproj" -c Release
+            workingDirectory: $(System.DefaultWorkingDirectory)/libraries/FHMQ9Common.Package
           - task: NuGetCommand@2
             displayName: 'Pack the FHMQ9Common.Package'
             inputs:
               command: 'pack'
-              packagesToPack: '**/libraries/FHMQ9Common.Package/FHMQ9Common.Package.csproj'
+              packagesToPack: '**/libraries/**/*.csproj'
               packDestination: '$(Build.ArtifactStagingDirectory)'
               versioningScheme: 'byPrereleaseNumber'
               majorVersion: '1'
