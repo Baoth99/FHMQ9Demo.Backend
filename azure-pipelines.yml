@@ -1,0 +1,71 @@
+trigger:
+- develop
+
+pool:
+  #name: Default
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: TEST-ENV
+
+stages:
+  - stage: Build_docker_image
+    displayName: Build Docker Images and Push To ACR
+    jobs:
+      # - job: Build
+      #   displayName: 'Run docker-compose.yml'
+      #   steps:
+      #     - task: DockerCompose@0
+      #       displayName: Build Docker Image
+      #       inputs:
+      #         azureSubscription: $(AZURESUBSCRIPTION)
+      #         azureContainerRegistry: $(AZURECONTAINERREGISTRY)
+      #         dockerComposeFile: '**/docker-compose.yaml'
+      #         action: 'Build services'
+      #         #dockerComposeCommand: up --build --no-start
+      #     - task: DockerCompose@0
+      #       displayName: Push Docker Images To ACR
+      #       inputs:
+      #         containerregistrytype: 'Azure Container Registry'
+      #         azureSubscription: $(AZURESUBSCRIPTION)
+      #         azureContainerRegistry: $(AZURECONTAINERREGISTRY)
+      #         dockerComposeFile: '**/docker-compose.yaml'
+      #         action: 'Push services'
+      #         includeSourceTags: true
+      #         includeLatestTag: true
+      - job: Publish
+        displayName: 'Publish Artifact'
+        steps:
+          # - task: UseDotNet@2
+          #   inputs:
+          #     packageType: 'sdk'
+          #     version: '7.x'  # Use the appropriate .NET version
+          #     installationPath: $(Agent.ToolsDirectory)/dotnet
+          # - script: ls
+          #   workingDirectory: $(System.DefaultWorkingDirectory)
+          - task: NuGetCommand@2
+            displayName: 'Pack the FHMQ9Common.Package'
+            inputs:
+              command: 'pack'
+              packagesToPack: '**/libraries/*.csproj'
+              packDestination: '$(Build.ArtifactStagingDirectory)'
+              versioningScheme: 'byPrereleaseNumber'
+              majorVersion: '1'
+              minorVersion: '0'
+              patchVersion: '0'
+              buildProperties: 'Configuration=Release'
+          - task: NuGetCommand@2
+            displayName: 'Publish the FHMQ9Common.Package'
+            inputs:
+              command: 'push'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+              nuGetFeedType: 'internal'
+              publishVstsFeed: '80366291-0d16-4243-a637-2a7e557e977f'
+              allowPackageConflicts: true
+  - stage: Deploy_aks
+    displayName: Deploy to AKS
+    jobs:
+      - job: Deploy
+        displayName: 'Deploy AKS'
+        steps:
+          - script: echo 'hello'

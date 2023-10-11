@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Utilities.Constants;
 
-namespace Service.AgentWebApi.Controllers;
+namespace AgentService.WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
@@ -24,7 +25,7 @@ public class WeatherForecastController : ControllerBase
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
         {
             Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            TemperatureC = Random.Shared.Next(-20, 55),
+            TemperatureC = Random.Shared.Next(-20, CommonConstants.MAX),
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
         })
         .ToArray();

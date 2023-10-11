@@ -1,0 +1,51 @@
+pool:
+  vmImage: 'windows-latest'  # Use a Windows agent
+
+variables:
+  azureSubscription: 'YourAzureServiceConnectionName'  # Replace with your Azure service connection name
+  appName: 'YourAzureAppName'  # Replace with your Azure App Service name
+  buildConfiguration: 'Release'
+
+
+          # - task: UseDotNet@2
+          #   inputs:
+          #     version: '7.x'
+
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    displayName: 'Build and Publish'
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '3.x'  # Use the appropriate .NET version
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+        installationPathWithRoot: $(Agent.ToolsDirectory)/dotnet
+    - script: dotnet build --configuration $(buildConfiguration)
+      displayName: 'Build the application'
+
+- stage: Deploy
+  jobs:
+  - job: Deploy
+    displayName: 'Deploy to Azure App Service'
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '3.x'  # Use the appropriate .NET version
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+        installationPathWithRoot: $(Agent.ToolsDirectory)/dotnet
+    - script: dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+      displayName: 'Publish the application'
+    
+    - task: AzureRmWebAppDeployment@4
+      inputs:
+        ConnectionType: 'AzureRM'
+        azureSubscription: $(azureSubscription)
+        appType: 'webApp'
+        appName: $(appName)
+        packageForLinux: '$(Build.ArtifactStagingDirectory)/**/*.zip'  # For Windows-based App Service, use '*.zip' only
+        enableCustomDeployment: true

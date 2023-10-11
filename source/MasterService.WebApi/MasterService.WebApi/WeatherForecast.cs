@@ -1,4 +1,4 @@
-﻿namespace Service.AgentWebApi;
+﻿namespace MasterService.WebApi;
 
 public class WeatherForecast
 {

@@ -1,5 +1,4 @@
-name: CONTINUOUS INTERGRATION FOR FHMQ9 DEMO
-
+name: CONTINUOUS INTERGRATION
 run-name: Run by @${{github.actor}}
 
 on: 
@@ -7,21 +6,58 @@ on:
       types:
         - created
     push:
-      branches: 
+      branches:
         - master
         - develop
-
+        - testing
+        - staging
+        - production
 jobs:
-    run_unit_test:
+    ci_jobs:
         name: ci_job
         runs-on: ubuntu-latest
         steps:
+            - run: |
+                echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+                echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+                echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
             - name: Checkout
               uses: actions/checkout@v3
-      
+
+            - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+
             - name: Setup .NET
               uses: actions/setup-dotnet@v3
               with:
                 dotnet-version: ${{ env.DOTNET_VERSION }}
             - name: Check .NET Version
               run: dotnet --version
+            
+
+            - name: Build AgentService
+              run: | 
+                cd source/AgentService.WebApi/AgentService.WebApi
+                dotnet build "AgentService.WebApi.csproj" -c Release
+
+            - name: Build MasterService
+              run: | 
+                cd source/MasterService.WebApi/MasterService.WebApi
+                dotnet build "MasterService.WebApi.csproj" -c Release
+
+            - name: Build ProductService
+              run: | 
+                cd source/ProductService.WebApi/ProductService.WebApi
+                dotnet build "ProductService.WebApi.csproj" -c Release
+
+            - name: Set output
+              id: vars
+              run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+            - run: echo "Sync to Azure Devops"
+            - name: Sync to Azure DevOps
+              run: |
+                git version
+                git push --prune https://${{secrets.AZURE_PAT}}@dev.azure.com/hoaibao2071999/FHMQ9Demo/_git/FHMQ9Demo "+refs/remotes/origin/${{steps.vars.outputs.short_ref}}:refs/heads/${{steps.vars.outputs.short_ref}}" 
+
+   

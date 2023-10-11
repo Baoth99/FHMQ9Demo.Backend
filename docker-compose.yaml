@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  agentservice.api:
+    image: fhmq9demo/agentserviceapi
+    build:
+      context: .
+      dockerfile: source/AgentService.WebApi/Dockerfile
+    ports:
+      - "2000:80"
+      - "2001:443"
+
+  masterservice.api:
+    image: fhmq9demo/masterserviceapi
+    build:
+      context: .
+      dockerfile: source/MasterService.WebApi/Dockerfile
+    ports:
+     - "3000:80"
+     - "3001:443"
+  
+  productservice.api:
+    image: fhmq9demo/productserviceapi
+    build:
+      context: .
+      dockerfile: source/ProductService.WebApi/Dockerfile
+    ports:
+      - "4000:80"
+      - "4001:443"
+    # ${DOCKER_REGISTRY-}
+
+    #  volumes:
+    #   - ~/.aspnet/https:/root/.aspnet/https:ro
+    #   - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
