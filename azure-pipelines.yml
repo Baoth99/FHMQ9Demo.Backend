@@ -72,4 +72,4 @@ stages:
       - job: Deploy
         displayName: 'Deploy AKS'
         steps:
-          - script: echo 'hello'
+          - script: echo 'hello1'
