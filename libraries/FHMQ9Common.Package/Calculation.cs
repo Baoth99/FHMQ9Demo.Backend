@@ -10,7 +10,7 @@ public class Calculation
 
     public int Divide(int a, int b)
     {
-        if (b == 0)
+        if (b == 0) //
         {
             throw new ArgumentException("Can not divide 0");
         }
