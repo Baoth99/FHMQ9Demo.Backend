@@ -1,6 +1,15 @@
 version: '3.4'
 
 services:
+  reverse.proxy:
+    image: fhmq9demo/reverseproxy
+    build:
+      context: .
+      dockerfile: proxy/reverse.proxy/Dockerfile
+    ports:
+      - "8080:80"
+      - "8081:443"
+      
   agentservice.api:
     image: fhmq9demo/agentserviceapi
     build:
@@ -27,12 +36,7 @@ services:
     ports:
       - "4000:80"
       - "4001:443"
-    
-  reverse.proxy:
-    image: fhmq9demo/reverseproxy
-    build:
-      context: .
-      dockerfile: proxy/reverse.proxy/Dockerfile
+  
     # ${DOCKER_REGISTRY-}
 
     #  volumes:
