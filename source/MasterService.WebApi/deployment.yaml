@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: master-service-api-deployment
+  labels:
+    app: master-service-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: master-service-api
+  template:
+    metadata:
+      labels:
+        app: master-service-api
+    spec:
+      containers:
+      - name: master-service-api
+        image: fhmq9demoregistry.azurecr.io/fhmq9demo/masterserviceapi:latest
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          request:
+            cpu: "200m"
+        ports:
+        - containerPort: 80

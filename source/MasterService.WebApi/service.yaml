@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: master-service-api
+  labels:
+    app: master-service-api
+spec:
+  selector:
+    app: master-service-api
+    component: master-service-api
+  ports:
+  - port: 8080
+    targetPort: 80
+
+

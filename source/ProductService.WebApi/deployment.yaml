@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service-api-deployment
+  labels:
+    app: product-service-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: product-service-api
+  template:
+    metadata:
+      labels:
+        app: product-service-api
+    spec:
+      containers:
+      - name: product-service-api
+        image: fhmq9demoregistry.azurecr.io/fhmq9demo/productserviceapi:latest
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          request:
+            cpu: "200m"
+        ports:
+        - containerPort: 80

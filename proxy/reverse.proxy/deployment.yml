@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: reverseproxy-deployment
+  labels:
+    app: reverseproxy
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: reverseproxy
+  template:
+    metadata:
+      labels:
+        app: reverseproxy
+    spec:
+      containers:
+      - name: reverseproxy
+        image: fhmq9demoregistry.azurecr.io/reverseproxy:latest
+        resources:
+          limits:
+            cpu: "500m"
+          requests:
+            cpu: "200m"
+        ports:
+        - containerPort: 80

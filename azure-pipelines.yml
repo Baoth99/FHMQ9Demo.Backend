@@ -63,7 +63,7 @@ stages:
               command: 'push'
               packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
               nuGetFeedType: 'internal'
-              publishVstsFeed: '80366291-0d16-4243-a637-2a7e557e977f'
+              publishVstsFeed: $(ARTIFACTS_FEED)
               allowPackageConflicts: true
               
   - stage: Deploy_aks
