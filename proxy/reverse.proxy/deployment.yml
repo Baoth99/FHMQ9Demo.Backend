@@ -16,11 +16,9 @@ spec:
     spec:
       containers:
       - name: reverseproxy
-        image: fhmq9demoregistry.azurecr.io/reverseproxy:latest
+        image: fhmq9demoregistry.azurecr.io/fhmq9demo/reverseproxy:latest
         resources:
           limits:
             cpu: "500m"
-          requests:
-            cpu: "200m"
         ports:
         - containerPort: 80
