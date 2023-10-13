@@ -7,8 +7,13 @@ services:
       context: .
       dockerfile: proxy/reverse.proxy/Dockerfile
     ports:
-      - "8080:80"
-      - "8081:443"
+      - "80:80"
+      - "81:443"
+    restart: always
+    depends_on:
+      - agentservice.api
+      - masterservice.api
+      - productservice.api
       
   agentservice.api:
     image: fhmq9demo/agentserviceapi

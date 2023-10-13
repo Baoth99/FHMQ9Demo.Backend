@@ -12,4 +12,5 @@ spec:
     app: reverseproxy
   type: LoadBalancer
 
+#kubectl rollout restart deployment/<deployment-name>
   #kubectl expose deployment agent-service-api-deployment --type=LoadBalancer --name=public-agent-service-api
