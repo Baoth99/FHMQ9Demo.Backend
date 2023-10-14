@@ -73,6 +73,8 @@ stages:
         displayName: 'Deploy AKS'
         steps:
           - script: echo 'hello1'
+          - script: ls
+            workingDirectory: $(Pipeline.Workspace)
           - task: KubernetesManifest@0
             displayName: 'Deploy AgentService to AKS'
             inputs:
