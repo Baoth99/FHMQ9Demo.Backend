@@ -80,6 +80,6 @@ stages:
               kubernetesServiceConnection: 'aks-fhmq9demo-conn'
               namespace: 'default'
               manifests: |
-                $(Pipeline.Workspace)/source/AgentService.WebApi/deployment.yml
-                $(Pipeline.Workspace)/source/AgentService.WebApi/service.yml
+                $(Pipeline.Workspace)/source/AgentService.WebApi/deployment.yaml
+                $(Pipeline.Workspace)/source/AgentService.WebApi/service.yaml
               rolloutStatusTimeout: '1'
