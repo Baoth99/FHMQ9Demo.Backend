@@ -7,7 +7,6 @@ metadata:
 spec:
   selector:
     app: product-service-api
-    component: product-service-api
   ports:
   - port: 8080
     targetPort: 80

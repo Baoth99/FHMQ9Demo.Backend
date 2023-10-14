@@ -7,7 +7,6 @@ metadata:
 spec:
   selector:
     app: master-service-api
-    component: master-service-api
   ports:
   - port: 8080
     targetPort: 80
