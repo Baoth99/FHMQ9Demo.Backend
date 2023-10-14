@@ -73,3 +73,13 @@ stages:
         displayName: 'Deploy AKS'
         steps:
           - script: echo 'hello1'
+          - task: KubernetesManifest@0
+            displayName: 'Deploy AgentService to AKS'
+            inputs:
+              action: 'deploy'
+              kubernetesServiceConnection: 'aks-fhmq9demo-conn'
+              namespace: 'default'
+              manifests: |
+                $(Pipeline.Workspace)/source/AgentService.WebApi/deployment.yml
+                $(Pipeline.Workspace)/source/AgentService.WebApi/service.yml
+              rolloutStatusTimeout: '1'

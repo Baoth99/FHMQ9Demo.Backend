@@ -13,4 +13,5 @@ spec:
   type: LoadBalancer
 
 #kubectl rollout restart deployment/<deployment-name>
+#kubectl exec --stdin --tty reverseproxy-deployment-dfc54d47c-ldntn -- /bin/sh
   #kubectl expose deployment agent-service-api-deployment --type=LoadBalancer --name=public-agent-service-api
