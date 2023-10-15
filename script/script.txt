@@ -1,0 +1,9 @@
+az account set --subscription #####
+
+az aks get-credentials --resource-group rg-FHMQ9Demo-test --name aks-FHMQ9Demo-test
+
+kubectl get deployments --all-namespaces=true
+
+kubectl get deployments --namespace <namespace-name>
+
+kubectl logs -l <label-key>=<label-value>

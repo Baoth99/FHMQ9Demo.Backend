@@ -82,3 +82,33 @@ stages:
                 $(System.DefaultWorkingDirectory)/source/AgentService.WebApi/deployment.yaml
                 $(System.DefaultWorkingDirectory)/source/AgentService.WebApi/service.yaml
               rolloutStatusTimeout: '1'
+          - task: KubernetesManifest@0
+            displayName: 'Deploy MasterService to AKS'
+            inputs:
+              action: 'deploy'
+              kubernetesServiceConnection: 'aks-fhmq9demo-conn'
+              namespace: 'default'
+              manifests: |
+                $(System.DefaultWorkingDirectory)/source/MasterService.WebApi/deployment.yaml
+                $(System.DefaultWorkingDirectory)/source/MasterService.WebApi/service.yaml
+              rolloutStatusTimeout: '1'
+          - task: KubernetesManifest@0
+            displayName: 'Deploy ProductService to AKS'
+            inputs:
+              action: 'deploy'
+              kubernetesServiceConnection: 'aks-fhmq9demo-conn'
+              namespace: 'default'
+              manifests: |
+                $(System.DefaultWorkingDirectory)/source/ProductService.WebApi/deployment.yaml
+                $(System.DefaultWorkingDirectory)/source/ProductService.WebApi/service.yaml
+              rolloutStatusTimeout: '1'
+          - task: KubernetesManifest@0
+            displayName: 'Deploy Proxy to AKS'
+            inputs:
+              action: 'deploy'
+              kubernetesServiceConnection: 'aks-fhmq9demo-conn'
+              namespace: 'default'
+              manifests: |
+                $(System.DefaultWorkingDirectory)/proxy/reverse.proxy/deployment.yaml
+                $(System.DefaultWorkingDirectory)/proxy/reverse.proxy/service.yaml
+              rolloutStatusTimeout: '1'
