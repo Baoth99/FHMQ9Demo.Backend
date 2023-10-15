@@ -9,13 +9,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var app = builder.Build();
-
 // Configure .NET to work with proxy servers and load balancers
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 app.UseSwagger();

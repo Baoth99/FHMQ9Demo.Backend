@@ -9,12 +9,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Configure ASP.NET Core to work with proxy servers and load balancers
+// Configure .NET to work with proxy servers and load balancers
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
     options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
 });
-
 
 var app = builder.Build();
 
