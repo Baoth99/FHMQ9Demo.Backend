@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.HttpOverrides;
+using Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Config Swagger Doc
+builder.Services.AddSwaggerGen(options =>
+{
+    if (!builder.Environment.IsDevelopment())
+    {
+        options.DocumentFilter<PathPrefixInsertDocumentFilter>("product");
+    }
+});
 
 // Configure .NET to work with proxy servers and load balancers
 builder.Services.Configure<ForwardedHeadersOptions>(options =>

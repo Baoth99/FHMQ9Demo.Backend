@@ -23,8 +23,10 @@ services:
       dockerfile: source/AgentService.WebApi/Dockerfile
     ports:
       - "8080:80"
-      - "2001:443"
+      - "8081:443"
     network_mode: "host"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
 
   masterservice.api:
     image: fhmq9demo/masterserviceapi
@@ -33,8 +35,10 @@ services:
       dockerfile: source/MasterService.WebApi/Dockerfile
     ports:
      - "8080:80"
-     - "3001:443"
+     - "8081:443"
     network_mode: "host"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
   
   productservice.api:
     image: fhmq9demo/productserviceapi
@@ -43,8 +47,10 @@ services:
       dockerfile: source/ProductService.WebApi/Dockerfile
     ports:
       - "8080:80"
-      - "4001:443"
+      - "8081:443"
     network_mode: "host"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
   
     # ${DOCKER_REGISTRY-}
 

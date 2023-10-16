@@ -3,7 +3,7 @@
 namespace MasterService.WebApi.Controllers;
 
 [ApiController]
-[Route("master/[controller]")]
+[Route("[controller]")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]
