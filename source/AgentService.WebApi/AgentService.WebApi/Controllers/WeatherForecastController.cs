@@ -4,7 +4,7 @@ using Utilities.Constants;
 namespace AgentService.WebApi.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("agent/[controller]")]
 public class WeatherForecastController : ControllerBase
 {
     private static readonly string[] Summaries = new[]

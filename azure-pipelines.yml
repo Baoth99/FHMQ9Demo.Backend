@@ -10,7 +10,7 @@ variables:
 
 stages:
   - stage: Build_docker_image
-    displayName: Build Docker Images and Push To ACR
+    displayName: Build And Publish
     jobs:
       - job: Build
         displayName: 'Run docker-compose.yml'
@@ -34,7 +34,7 @@ stages:
               includeSourceTags: true
               includeLatestTag: true
       - job: Publish
-        displayName: 'Publish Artifact'
+        displayName: 'Build and Publish Package'
         steps:
           - task: UseDotNet@2
             displayName: 'Install Dotnet'
@@ -66,7 +66,7 @@ stages:
               publishVstsFeed: $(ARTIFACTS_FEED)
               allowPackageConflicts: true
               
-  - stage: Deploy_aks
+  - stage: Deploy_AKS
     displayName: Deploy to AKS
     jobs:
       - job: Deploy
@@ -76,8 +76,8 @@ stages:
             displayName: 'Deploy AgentService to AKS'
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection: 'aks-fhmq9demo-conn'
-              namespace: 'default'
+              kubernetesServiceConnection: $(AKS)
+              namespace: $(AKS_NAMESPACE)
               manifests: |
                 $(System.DefaultWorkingDirectory)/source/AgentService.WebApi/deployment.yaml
                 $(System.DefaultWorkingDirectory)/source/AgentService.WebApi/service.yaml
@@ -86,8 +86,8 @@ stages:
             displayName: 'Deploy MasterService to AKS'
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection: 'aks-fhmq9demo-conn'
-              namespace: 'default'
+              kubernetesServiceConnection: $(AKS)
+              namespace: $(AKS_NAMESPACE)
               manifests: |
                 $(System.DefaultWorkingDirectory)/source/MasterService.WebApi/deployment.yaml
                 $(System.DefaultWorkingDirectory)/source/MasterService.WebApi/service.yaml
@@ -96,8 +96,8 @@ stages:
             displayName: 'Deploy ProductService to AKS'
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection: 'aks-fhmq9demo-conn'
-              namespace: 'default'
+              kubernetesServiceConnection: $(AKS)
+              namespace: $(AKS_NAMESPACE)
               manifests: |
                 $(System.DefaultWorkingDirectory)/source/ProductService.WebApi/deployment.yaml
                 $(System.DefaultWorkingDirectory)/source/ProductService.WebApi/service.yaml
@@ -106,8 +106,8 @@ stages:
             displayName: 'Deploy Proxy to AKS'
             inputs:
               action: 'deploy'
-              kubernetesServiceConnection: 'aks-fhmq9demo-conn'
-              namespace: 'default'
+              kubernetesServiceConnection: $(AKS)
+              namespace: $(AKS_NAMESPACE)
               manifests: |
                 $(System.DefaultWorkingDirectory)/proxy/reverse.proxy/deployment.yaml
                 $(System.DefaultWorkingDirectory)/proxy/reverse.proxy/service.yaml
