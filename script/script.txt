@@ -14,5 +14,5 @@ kubectl logs -l <label-key>=<label-value>
 
   #kubectl expose deployment master-service-api-deployment --type=LoadBalancer --name=public-master-service-api
 
-
+kubectl rollout restart deployment master-service-api-deployment
   kubectl delete deployment agent-service-api-deployment master-service-api-deployment product-service-api-deployment reverseproxy-deployment
